@@ -33,17 +33,17 @@ double pow(double x, int y)
 
 double improvedPow(double x, int y)
 {
- 	// Base Case: any number to the power of 0 is 1
+ 	// Base Case
     if (y == 0) {
         return 1.0;
     }
 
-    // Handle negative exponents: x^y = 1 / (x^(-y))
+    // Handle negative exponents given in hint
     if (y < 0) {
         return 1.0 / improvedPow(x, -y);
     }
 
-    // Recursive step using a temporary variable to avoid redundant calculations
+    // Recursive step using temp variable given in hint
     double temp = improvedPow(x, y / 2);
     if (y % 2 == 0) {
         return temp * temp;

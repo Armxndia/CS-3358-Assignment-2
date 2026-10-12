@@ -8,8 +8,10 @@ void moveTower(int disk, char source, char dest, char spare)
         return;
     }
 
+	//small from source to spare
 	moveTower(disk - 1, source, spare, dest);
 	cout << "move disk " << disk << " from " << source << " to " << dest << endl;
+	//small from spare to destination
 	moveTower(disk - 1, spare, dest, source);
 }
 
