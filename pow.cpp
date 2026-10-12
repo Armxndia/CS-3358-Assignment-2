@@ -4,7 +4,18 @@ using namespace std;
 
 double pow(double x, int y) 
 {
- // To be implemented by you
+	//Base Case
+	if (y == 0) {
+        return 1.0;
+    }
+
+	//Negative Exponents
+	if (y < 0) {
+        return 1.0 / pow(x, -y);
+    }
+
+	//Recursion for pos exponents
+	return x * pow(x, y - 1);
 }
 
 int main() 
@@ -27,7 +38,5 @@ int main()
 	else
 		cout << pow(x,y) << endl;
 		
-		
 	return 0;
 }
-
