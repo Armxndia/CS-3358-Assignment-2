@@ -4,7 +4,7 @@
 ////***** In Linux, e.g., (zeus.cs.txstate.edu), you might need the option "-std=c++11"
 ////***** to make it compile by g++, as chrono might not be supported in earlier standard.
 ////***** For example, $ g++ -std=c++11 improvedPow.cpp -o a
-// #include <chrono>
+#include <chrono>
 
 using namespace std;
 
@@ -15,14 +15,41 @@ using namespace std;
 ////***** See the comments in main(), try to compare
 ////***** the running time of your pow() and improvedPow().
 
-// double pow(double x, int y) 
-// {
-// // What you implemented in pow.cpp
-// }
+double pow(double x, int y) 
+{
+	//Base Case
+	if (y == 0) {
+        return 1.0;
+    }
+
+	//Negative Exponents
+	if (y < 0) {
+        return 1.0 / pow(x, -y);
+    }
+
+	//Recursion for pos exponents
+	return x * pow(x, y - 1);
+}
 
 double improvedPow(double x, int y)
 {
- // To be implemented by you
+ 	// Base Case: any number to the power of 0 is 1
+    if (y == 0) {
+        return 1.0;
+    }
+
+    // Handle negative exponents: x^y = 1 / (x^(-y))
+    if (y < 0) {
+        return 1.0 / improvedPow(x, -y);
+    }
+
+    // Recursive step using a temporary variable to avoid redundant calculations
+    double temp = improvedPow(x, y / 2);
+    if (y % 2 == 0) {
+        return temp * temp;
+    } else {
+        return x * temp * temp;
+    }
 }
 
 int main() 
@@ -46,25 +73,25 @@ int main()
 		cout << improvedPow(x,y) << endl;
 	
 
-////***** Uncomment the following code block to get some sense about the running time 
+////*****Uncomment the following code block to get some sense about the running time 
 ////***** of the two functions --- pow() v.s. improvedPow().
 ////***** In Linux, e.g., (zeus.cs.txstate.edu), you might need the option "-std=c++11"
 ////***** to make it compile by g++, as chrono might not be supported in earlier standard.
 ////***** For example, $ g++ -std=c++11 improvedPow.cpp -o a
 
-		// cout << "To get this result..." << endl;
+		cout << "To get this result..." << endl;
 		
-		// chrono::high_resolution_clock::time_point t1 = chrono::high_resolution_clock::now();
-		// pow(x,y);
-		// chrono::high_resolution_clock::time_point t2 = chrono::high_resolution_clock::now();
-		// auto duration = chrono::duration_cast<chrono::nanoseconds>( t2 - t1 ).count();
-		// cout << "pow(x,y) would take time: " << duration << " ns" << endl;
+		chrono::high_resolution_clock::time_point t1 = chrono::high_resolution_clock::now();
+		pow(x,y);
+		chrono::high_resolution_clock::time_point t2 = chrono::high_resolution_clock::now();
+		auto duration = chrono::duration_cast<chrono::nanoseconds>( t2 - t1 ).count();
+		cout << "pow(x,y) would take time: " << duration << " ns" << endl;
 		
-		// t1 = chrono::high_resolution_clock::now();
-		// improvedPow(x,y);
-		// t2 = chrono::high_resolution_clock::now();
-		// duration = chrono::duration_cast<chrono::nanoseconds>( t2 - t1 ).count();
-		// cout << "improvedPow(x,y) would take time: " << duration << " ns" << endl;
+		t1 = chrono::high_resolution_clock::now();
+		improvedPow(x,y);
+		t2 = chrono::high_resolution_clock::now();
+		duration = chrono::duration_cast<chrono::nanoseconds>( t2 - t1 ).count();
+		cout << "improvedPow(x,y) would take time: " << duration << " ns" << endl;
 	}		
 		
 	return 0;
