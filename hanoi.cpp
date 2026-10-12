@@ -4,7 +4,13 @@ using namespace std;
 
 void moveTower(int disk, char source, char dest, char spare) 
 {
- // To be implemented by you
+ 	if (disk < 0) {
+        return;
+    }
+
+	moveTower(disk - 1, source, spare, dest);
+	cout << "move disk " << disk << " from " << source << " to " << dest << endl;
+	moveTower(disk - 1, spare, dest, source);
 }
 
 int main() 
@@ -20,4 +26,3 @@ int main()
 	moveTower(n-1, 'A', 'B', 'C');
 	return 0;
 }
-
